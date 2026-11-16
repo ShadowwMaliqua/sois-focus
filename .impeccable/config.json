@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "src/edge.html"
+        ],
+        "createdAt": "2026-11-16T21:22:19.686Z",
+        "reason": "Alerte fonctionnelle demandée par l'utilisateur (bords d'écran rouges en cas de distraction) ; le halo rouge est la fonction, pas un effet décoratif. Décidé par l'assistant sur la base de la demande."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "src/style.css"
+        ],
+        "createdAt": "2026-11-16T22:04:52.864Z",
+        "reason": "Le quadrillage Seyès est le matériau du monde visuel retenu (papier d'écolier français), pas un décor générique. Décidé par l'assistant, direction par défaut du tirage, non confirmée explicitement par l'utilisateur."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "src/index.html"
+        ],
+        "createdAt": "2026-11-16T22:04:52.959Z",
+        "reason": "Le quadrillage Seyès est le matériau du monde visuel retenu (papier d'écolier français), pas un décor générique. Décidé par l'assistant, direction par défaut du tirage, non confirmée explicitement par l'utilisateur."
+      }
+    ]
+  }
+}

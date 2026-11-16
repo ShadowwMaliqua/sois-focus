@@ -1,0 +1,77 @@
+{
+  "name": "sois-focus",
+  "version": "1.0.0",
+  "description": "Ton coach anti-distraction : la webcam (100 % locale) te dit « Sois focus ! » quand tu regardes ton téléphone, ailleurs, ou que tu quittes ton poste.",
+  "main": "main.js",
+  "author": "ShadowwMaliqua <ShadowwMaliqua@users.noreply.github.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/ShadowwMaliqua/sois-focus",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShadowwMaliqua/sois-focus.git"
+  },
+  "scripts": {
+    "prepare-assets": "node scripts/fetch-assets.mjs && node scripts/make-icon.mjs",
+    "postinstall": "npm run prepare-assets",
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux",
+    "dist:mac": "electron-builder --mac"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^1.2.3"
+  },
+  "devDependencies": {
+    "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
+    "@fontsource/playwrite-fr-moderne": "^5.3.0",
+    "electron": "^45.3.3",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "io.github.shadowwmaliqua.soisfocus",
+    "productName": "Sois Focus",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "icon": "build/icon.png",
+      "maintainer": "ShadowwMaliqua"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "build/icon.png",
+      "extendInfo": {
+        "NSCameraUsageDescription": "Sois Focus utilise la caméra, uniquement en local, pour détecter les distractions."
+      }
+    }
+  }
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src 'self' blob: data:" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sois Focus</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-state="idle">
+  <div class="marge" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="brand">
+      <h1 class="logo">Sois Focus</h1>
+      <span class="sous">cahier de concentration</span>
+    </div>
+    <p class="prive">Caméra 100 % locale · rien n'est enregistré</p>
+  </header>
+
+  <main>
+    <section class="stage" aria-label="Surveillance">
+      <div class="video-wrap" id="videoWrap">
+        <video id="video" playsinline muted></video>
+        <canvas id="overlay"></canvas>
+        <div class="placeholder" id="placeholder">
+          <p>Clique sur <strong>Démarrer</strong> pour que la caméra veille sur ta concentration.</p>
+        </div>
+        <div class="alert-banner" id="alertBanner" hidden></div>
+      </div>
+
+      <div class="etat" role="status" aria-live="polite">
+        <span class="dot" id="statusDot" aria-hidden="true"></span>
+        <svg class="ico ico-ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" /></svg>
+        <svg class="ico ico-warn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v10M12 18.5v1.5" /></svg>
+        <svg class="ico ico-bad" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" /></svg>
+        <span class="etat-texte" id="statusText">Prêt</span>
+      </div>
+
+      <div class="controls">
+        <button id="btnStart" class="primary">Démarrer la surveillance</button>
+        <button id="btnPause" disabled>Pause</button>
+        <button id="btnCalibrate" disabled title="Regarde ton écran normalement puis clique">Calibrer ma position</button>
+      </div>
+
+      <details class="brouillon">
+        <summary>Brouillon · ce que l'IA voit</summary>
+        <pre class="debug" id="debug">Démarre la surveillance pour voir ce que l'IA détecte.</pre>
+      </details>
+    </section>
+
+    <aside class="side">
+      <section class="card copie" aria-labelledby="h-copie">
+        <h2 id="h-copie">Ma copie</h2>
+        <p class="note"><span class="note-val" id="statScore">20/20</span></p>
+        <dl class="stats">
+          <div><dt>Temps focus</dt><dd id="statFocus">0:00</dd></div>
+          <div><dt>Durée</dt><dd id="statTotal">0:00</dd></div>
+          <div><dt>Téléphone</dt><dd id="statPhone">0</dd></div>
+          <div><dt>Regard ailleurs</dt><dd id="statAway">0</dd></div>
+          <div><dt>Absences</dt><dd id="statAbsent">0</dd></div>
+        </dl>
+        <h3>Remarques du correcteur</h3>
+        <ol class="annotations" id="annotations">
+          <li class="vide">Rien à signaler pour l'instant.</li>
+        </ol>
+      </section>
+
+      <section class="card reglages" aria-labelledby="h-reglages">
+        <h2 id="h-reglages">Réglages</h2>
+        <fieldset>
+          <legend>Je veux être alerté si…</legend>
+          <label class="row"><input type="checkbox" id="optPhone" checked /> je regarde un téléphone ou une tablette</label>
+          <label class="row"><input type="checkbox" id="optAway" checked /> mon regard quitte l'écran</label>
+          <label class="row"><input type="checkbox" id="optAbsent" checked /> je quitte mon poste</label>
+        </fieldset>
+        <fieldset>
+          <legend>Comment ?</legend>
+          <label class="row"><input type="checkbox" id="optEdges" checked /> bords de l'écran en rouge</label>
+          <label class="row"><input type="checkbox" id="optBeep" checked /> bip sonore</label>
+          <label class="row"><input type="checkbox" id="optNotif" checked /> notification système</label>
+          <label class="row"><input type="checkbox" id="optAutostart" /> lancer au démarrage de l'ordinateur</label>
+        </fieldset>
+        <label class="slider"><span>Délai avant alerte <b><output id="tolVal">3</output> s</b></span>
+          <input type="range" id="optTol" min="1" max="15" step="1" value="3" />
+        </label>
+        <label class="slider"><span>Rappel toutes les <b><output id="repVal">10</output> s</b></span>
+          <input type="range" id="optRep" min="4" max="60" step="1" value="10" />
+        </label>
+        <label class="slider"><span>Sensibilité du regard <b><output id="sensVal">35</output>°</b></span>
+          <input type="range" id="optSens" min="20" max="60" step="1" value="35" />
+        </label>
+        <button id="btnTest" class="ghost">Tester l'alerte</button>
+      </section>
+    </aside>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
